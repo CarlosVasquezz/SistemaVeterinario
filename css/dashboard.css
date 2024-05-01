@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://img.freepik.com/vector-premium/salon-aseo-ilustracion-patron-transparente-vector-perros-fondo-animal-tienda-mascotas_682999-74.jpg');
+    background-size: cover; /* Ajustar el tamaño del fondo para cubrir toda la pantalla */
+    background-position: center; /* Centrar la imagen de fondo */
+    background-repeat: no-repeat; /* Evitar que la imagen se repita */
+}
+
+
+/* Estilos personalizados para las cartas de mascotas */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    background-color: #71c1f7; /* Color de fondo suave */
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 20px;
+    color: #37474F; /* Color de texto principal */
+    margin-bottom: 10px;
+}
+
+.card-text {
+    color: #546E7A; /* Color de texto secundario */
+}
+
+.container {
+    padding-top: 20px;
+}
+
+/* Estilos para el menú lateral */
+.sidebar {
+    margin-top: 2rem;
+    width: 250px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; 
+    transition: width 0.3s ease;
+    border-radius: 10px;
+}
+
+/* Estilos para los elementos del menú */
+.nav-link {
+    display: block;
+    padding: 1.0rem;
+    font-size: 16px;
+    color: #37474F; /* Color del texto */
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #72b9ff; /* Cambiar color de fondo al pasar el ratón */
+    color: #007bff; /* Cambiar color del texto al pasar el ratón */
+}
+
+

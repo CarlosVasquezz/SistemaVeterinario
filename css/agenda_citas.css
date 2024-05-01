@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://img.freepik.com/vector-premium/salon-aseo-ilustracion-patron-transparente-vector-perros-fondo-animal-tienda-mascotas_682999-74.jpg');
+    background-size: cover; /* Ajustar el tamaño del fondo para cubrir toda la pantalla */
+    background-position: center; /* Centrar la imagen de fondo */
+    background-repeat: no-repeat; /* Evitar que la imagen se repita */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="datetime-local"],
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
