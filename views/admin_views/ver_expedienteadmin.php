@@ -1,37 +1,32 @@
 <?php
 session_start();
 
+// Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: ../login.php");
     exit();
 }
 
-require_once "../../utils/db_connection.php";
-
-$sql_mascotas = "SELECT id_paciente, nombre FROM paciente";
-$result_mascotas = $conn->query($sql_mascotas);
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['paciente'])) {
-    $id_paciente = $_POST['paciente'];
-
-    $sql_expediente = "SELECT p.nombre AS nombre_paciente, p.edad AS edad_paciente, p.genero AS genero_paciente, p.animal AS especie_paciente, 
-                              c.fecha_cita, c.tipo_de_cita, c.descripcion AS descripcion_cita,
-                              v.fecha_vacuna
-                       FROM paciente p
-                       LEFT JOIN cita c ON p.id_paciente = c.id_paciente
-                       LEFT JOIN vacuna v ON p.id_paciente = v.id_paciente
-                       WHERE p.id_paciente = ?
-                       ORDER BY c.fecha_cita DESC, v.fecha_vacuna DESC";
-
-    $stmt = $conn->prepare($sql_expediente);
-    $stmt->bind_param("i", $id_paciente);
-    $stmt->execute();
-    $result_expediente = $stmt->get_result();
-} else {
-    $result_expediente = null;
+// Verificar si el usuario tiene el rol de administrador
+if ($_SESSION['rol'] !== 'admin') {
+    header("Location: dashboard_admin.php");
+    exit();
 }
 
+require_once "../../utils/db_connection.php";
 
+// Obtener la lista de todos los pacientes con información de dueño, especie y fecha de la última consulta
+$sql_pacientes = "SELECT p.id_paciente, p.nombre AS nombre_paciente, p.animal AS especie_paciente, 
+                        CONCAT(u.nombre, ' ', u.apellido) AS dueño_paciente,
+                        MAX(c.fecha_cita) AS ultima_consulta
+                    FROM paciente p
+                    JOIN usuario u ON p.id_usuario = u.id_usuario
+                    LEFT JOIN cita c ON p.id_paciente = c.id_paciente
+                    GROUP BY p.id_paciente";
+$result_pacientes = $conn->query($sql_pacientes);
+
+
+// Cerrar la conexión
 $conn->close();
 ?>
 
@@ -41,68 +36,52 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expediente Médico</title>
+    <title>Ver Expediente</title>
     <link rel="stylesheet" href="../../css/styles2.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
 
-    <?php include '../header.php'; ?> 
+    <?php include '../header.php'; ?>
 
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Expediente Médico</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group">
-                <label for="paciente">Seleccionar Mascota:</label>
-                <select class="form-control" id="paciente" name="paciente">
-                    <?php while ($row = $result_mascotas->fetch_assoc()): ?>
-                        <option value="<?php echo $row['id_paciente']; ?>"><?php echo $row['nombre']; ?></option>
-                    <?php endwhile; ?>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Mostrar Expediente</button>
-        </form>
-        <hr>
-        <?php if ($result_expediente && $result_expediente->num_rows > 0) : ?>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
+        <h2 class="text-center mb-4">Expedientes Médicos</h2>
+
+        <a href="agregar_expediente.php" class="btn btn-primary mb-3">Agregar Expediente</a>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre Paciente</th>
+                        <th>Especie</th>
+                        <th>Dueño</th>
+                        <th>Última Consulta</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row = $result_pacientes->fetch_assoc()): ?>
                         <tr>
-                            <th>Nombre Paciente</th>
-                            <th>Edad</th>
-                            <th>Género</th>
-                            <th>Especie</th>
-                            <th>Fecha Cita</th>
-                            <th>Tipo de Cita</th>
-                            <th>Descripción Cita</th>
-                            <th>Fecha Vacuna</th>
+                            <td><?php echo $row['nombre_paciente']; ?></td>
+                            <td><?php echo $row['especie_paciente']; ?></td>
+                            <td><?php echo $row['dueño_paciente']; ?></td>
+                            <td><?php echo $row['ultima_consulta']; ?></td>
+                            <td>
+                                <a href="ver_expediente_individual.php?id_paciente=<?php echo $row['id_paciente']; ?>"
+                                    class="btn btn-info btn-sm">Ver Expediente</a>
+                            </td>
+
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = $result_expediente->fetch_assoc()) : ?>
-                            <tr>
-                                <td><?php echo $row['nombre_paciente']; ?></td>
-                                <td><?php echo $row['edad_paciente']; ?></td>
-                                <td><?php echo $row['genero_paciente']; ?></td>
-                                <td><?php echo $row['especie_paciente']; ?></td>
-                                <td><?php echo $row['fecha_cita']; ?></td>
-                                <td><?php echo $row['tipo_de_cita']; ?></td>
-                                <td><?php echo $row['descripcion_cita']; ?></td>
-                                <td><?php echo $row['fecha_vacuna']; ?></td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            </div>
-        <?php elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['paciente'])) : ?>
-            <div class="alert alert-warning" role="alert">
-                No se encontró información para el paciente seleccionado.
-            </div>
-        <?php endif; ?>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <?php include '../footer.php'; ?> 
+    <?php include '../footer.php'; ?>
+
 </body>
 
 </html>

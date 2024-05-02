@@ -6,7 +6,7 @@ Users
 sofia@example.com
 123456
 
-alejandro@example.com
+carlosU@example.com
 123456
 
 valentina@example.com
@@ -15,10 +15,7 @@ valentina@example.com
 santiago@example.com
 123456
 
-andrea@example.com
+Tatiana@example.com
 123456
 
 
-
-../views/admin_views/
-../../utils/

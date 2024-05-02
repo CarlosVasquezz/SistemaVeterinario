@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-if (!isset ($_SESSION['id_usuario'])) {
+if (!isset($_SESSION['id_usuario'])) {
     header("Location: ../login.php");
     exit();
 }
 
 if ($_SESSION['rol'] !== 'admin') {
-    header("Location: dashboard_admin.php"); 
+    header("Location: dashboard_admin.php");
     exit();
 }
 
@@ -26,13 +26,14 @@ $productos = obtenerProductos();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Productos</title>
-    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../../css/styles2.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
     <?php include '../header.php'; ?>
-    <div class="container mt-5">
+    <div class="container mt-5"
+        style="background-color: rgba(255, 255, 255, 0.4); border-radius: 10px; padding: 20px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); backdrop-filter: blur(5px);">
         <h2 class="text-center mb-4">Gestión de Productos</h2>
 
         <!-- Botón para agregar nuevo producto -->
@@ -71,6 +72,7 @@ $productos = obtenerProductos();
             </tbody>
         </table>
     </div>
+
     <?php include '../footer.php'; ?>
 </body>
 

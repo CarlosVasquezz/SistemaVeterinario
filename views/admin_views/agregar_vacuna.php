@@ -13,6 +13,12 @@ if ($_SESSION['rol'] !== 'admin') {
     exit();
 }
 
+// Verificar si el usuario tiene el rol de administrador
+if ($_SESSION['rol'] !== 'admin') {
+    header("Location: dashboard_admin.php");
+    exit();
+}
+
 // Incluir la conexión a la base de datos
 require_once "../../utils/db_connection.php";
 

@@ -86,6 +86,16 @@ $nombreUsuario = $_SESSION['nombre'];
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="card bg-transparent bg-blur">
+                    <img class="card-img-top" src="../../img/cirujano.png" alt="Imagen 6">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestionar Operaciones</h5>
+                        <p class="card-description">Administra las operaciones de la veterinaria.</p>
+                        <a href="lista_operaciones.php" class="btn btn-primary">Gestión de Operaciones</a>
+                    </div>
+                </div>
+            </div>
 
         </div>
 

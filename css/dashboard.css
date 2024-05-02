@@ -1,61 +1,69 @@
 body {
-    font-family: Arial, sans-serif;
-    background-image: url('https://img.freepik.com/vector-premium/salon-aseo-ilustracion-patron-transparente-vector-perros-fondo-animal-tienda-mascotas_682999-74.jpg');
-    background-size: cover; /* Ajustar el tamaño del fondo para cubrir toda la pantalla */
-    background-position: center; /* Centrar la imagen de fondo */
-    background-repeat: no-repeat; /* Evitar que la imagen se repita */
+  font-family: Arial, sans-serif;
+  background-image: url("../img/fondo1.jpg");
+  background-size: cover;
 }
 
-
-/* Estilos personalizados para las cartas de mascotas */
+/* Estilo para las cartas de mascotas */
 .card {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-    background-color: #71c1f7; /* Color de fondo suave */
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
 }
 
-.card-title {
-    font-size: 20px;
-    color: #37474F; /* Color de texto principal */
-    margin-bottom: 10px;
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
 }
 
-.card-text {
-    color: #546E7A; /* Color de texto secundario */
+.card-body {
+  color: #000;
 }
 
-.container {
-    padding-top: 20px;
+.no-image {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 /* Estilos para el menú lateral */
 .sidebar {
-    margin-top: 2rem;
-    width: 250px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow-y: auto; 
-    transition: width 0.3s ease;
-    border-radius: 10px;
+  margin-top: 2rem;
+  width: 250px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  transition: width 0.3s ease;
+  border-radius: 10px;
 }
 
 /* Estilos para los elementos del menú */
 .nav-link {
-    display: block;
-    padding: 1.0rem;
-    font-size: 16px;
-    color: #37474F; /* Color del texto */
-    text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
+  display: block;
+  padding: 1rem;
+  font-size: 16px;
+  color: #37474f;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-link:hover {
-    background-color: #72b9ff; /* Cambiar color de fondo al pasar el ratón */
-    color: #007bff; /* Cambiar color del texto al pasar el ratón */
+  background-color: #376794;
+  color: #071524;
 }
 
 
+.col-md-6 {
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.568);
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+}

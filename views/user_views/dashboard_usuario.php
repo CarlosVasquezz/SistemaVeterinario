@@ -2,7 +2,7 @@
 session_start();
 
 // Verificar si el usuario ha iniciado sesión
-if (!isset ($_SESSION['id_usuario'])) {
+if (!isset($_SESSION['id_usuario'])) {
     header("Location: ../login.php");
     exit();
 }
@@ -10,13 +10,33 @@ if (!isset ($_SESSION['id_usuario'])) {
 // Incluir la conexión a la base de datos
 require_once "../../utils/db_connection.php";
 
-// Recuperar el ID del usuario actual
-$id_usuario = $_SESSION['id_usuario'];
+// Verificar si se ha enviado un ID de mascota válido para eliminar
+if (isset($_GET['eliminar_id']) && !empty($_GET['eliminar_id'])) {
+    $id_paciente = $_GET['eliminar_id'];
+
+    // Consulta para eliminar la mascota de la base de datos
+    $sql = "DELETE FROM paciente WHERE id_paciente = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_paciente);
+    $stmt->execute();
+
+    // Manejar cualquier error o resultado de la consulta
+    if ($stmt->affected_rows > 0) {
+        // La mascota se eliminó correctamente
+        $mensaje = "La mascota se eliminó correctamente.";
+    } else {
+        // No se pudo eliminar la mascota
+        $mensaje = "Hubo un problema al intentar eliminar la mascota. Por favor, inténtalo de nuevo.";
+    }
+
+    // Cerrar la consulta
+    $stmt->close();
+}
 
 // Consulta para obtener la información de las mascotas del usuario
 $sql = "SELECT * FROM paciente WHERE id_usuario = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id_usuario);
+$stmt->bind_param("i", $_SESSION['id_usuario']);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -34,6 +54,12 @@ $conn->close();
     <title>Dashboard - Usuario</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1KPuLlRA43s74gkfw7y66YlpXDn9l0BLJVYpWzxBgPTzr5RbhRyfY4MROnyX/QEt0UuizJpHDJ1zqELhATf14A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -68,11 +94,19 @@ $conn->close();
             </nav>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 mt-4">
-                <h2 class="text-center mb-4">Lista de Mascotas</h2>
+                <h2 class="text-center mb-4"
+                    style="background-color: rgba(255, 255, 255, 0.98); border-radius: 10px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);">
+                    Lista de Mascotas</h2>
                 <div class="row">
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <div class="col-md-4 mb-4">
                             <div class="card">
+                                <?php if (!empty($row['foto_contenido'])): ?>
+                                    <img src="data:<?php echo $row['foto_tipo']; ?>;base64,<?php echo base64_encode($row['foto_contenido']); ?>"
+                                        class="card-img-top" alt="Foto de <?php echo $row['nombre']; ?>">
+                                <?php else: ?>
+                                    <div class="card-img-top no-image"></div>
+                                <?php endif; ?>
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         <?php echo $row['nombre']; ?>
@@ -86,15 +120,23 @@ $conn->close();
                                     <p class="card-text">Especie:
                                         <?php echo $row['animal']; ?>
                                     </p>
+                                    <div class="btn-group" role="group">
+                                        <!-- Botón de editar con ícono de lápiz -->
+                                        <a href="editar_mascota.php?id=<?php echo $row['id_paciente']; ?>"
+                                            class="btn btn-primary"><i class="fas fa-edit"></i> Editar</a>
+                                        <!-- Botón de eliminar con ícono de papelera -->
+                                        <a href="?eliminar_id=<?php echo $row['id_paciente']; ?>" class="btn btn-danger"><i
+                                                class="fas fa-trash-alt"></i> Eliminar</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     <?php endwhile; ?>
                 </div>
             </main>
+
         </div>
     </div>
-
     <?php include '../footer.php'; ?>
 
 </body>

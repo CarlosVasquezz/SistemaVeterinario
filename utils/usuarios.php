@@ -25,18 +25,6 @@ function obtenerUsuarioPorId($id) {
     return mysqli_fetch_assoc($resultado);
 }
 
-// Función para insertar un nuevo usuario en la base de datos
-function insertarUsuario($nombre, $apellido, $email, $contrasena, $rol) {
-    global $conn;
-    $hashed_password = password_hash($contrasena, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO usuario (nombre, apellido, email, contrasena, rol) VALUES ('$nombre', '$apellido', '$email', '$hashed_password', '$rol')";
-    $resultado = mysqli_query($conn, $sql);
-    if (!$resultado) {
-        echo "Error al insertar el usuario: " . mysqli_error($conn);
-        exit();
-    }
-    return $resultado;
-}
 
 // Función para actualizar un usuario en la base de datos
 function actualizarUsuario($id, $nombre, $apellido, $email, $rol) {

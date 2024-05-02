@@ -30,9 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Redirigir a la página correspondiente según el rol
         if ($rol === 'admin') {
-            header("Location: views/admin_views/dashboard_admin.php");
+            header("Location: ../views/admin_views/dashboard_admin.php");
         } else {
-            header("Location: views/user_views/dashboard_usuario.php");
+            header("Location: ../views/user_views/dashboard_usuario.php");
         }
         exit();
     } else {

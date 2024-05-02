@@ -3,11 +3,12 @@ body {
     background-image: url('../img/loginFondo.jpg');
     background-size: cover;
     background-repeat: no-repeat; 
+    background-position: center center;
 }
 
 .bg-blur {
-    background-color: rgba(255, 255, 255, 0.5); /* Fondo semitransparente */
-    backdrop-filter: blur(10px); /* Desenfoque */
+    background-color: rgba(255, 255, 255, 0.5); 
+    backdrop-filter: blur(10px); 
 }
 
 .card-form {

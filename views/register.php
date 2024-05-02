@@ -31,7 +31,7 @@ if (isset($_SESSION['id_usuario'])) {
                 <div class="card bg-blur">
                     <div class="card-body card-form">
                         <h2 class="card-title text-center mb-4">Registrarse</h2>
-                        <form action="register_process.php" method="POST">
+                        <form action="../utils/register_process.php" method="POST">
                             <!-- Espacio para la foto -->
                             <div class="form-photo text-center">
                                 <i class="fas fa-user-plus fa-5x"></i> <!-- Icono de usuario -->

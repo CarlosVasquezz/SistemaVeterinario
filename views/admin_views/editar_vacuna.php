@@ -7,6 +7,12 @@ if (!isset($_SESSION['id_usuario'])) {
     exit();
 }
 
+// Verificar si el usuario tiene el rol de administrador
+if ($_SESSION['rol'] !== 'admin') {
+    header("Location: dashboard_admin.php");
+    exit();
+}
+
 // Verificar si se ha proporcionado un ID de vacuna válido
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: registro_vacunas.php");

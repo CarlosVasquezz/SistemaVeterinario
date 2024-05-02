@@ -87,47 +87,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['editar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Producto</title>
-    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../../css/styles2.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
     <?php include '../header.php'; ?>
 
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Editar Producto</h2>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <input type="hidden" name="id" value="<?php echo $producto['id_producto']; ?>">
-            <div class="form-group">
-                <label for="nombre">Nombre del Producto</label>
-                <input type="text" class="form-control" id="nombre" name="nombre"
-                    value="<?php echo $producto['nombre_producto']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="tipo">Tipo</label>
-                <select class="form-control" id="tipo" name="tipo" required>
-                    <option value="medicina" <?php echo ($producto['tipo'] == 'medicina') ? 'selected' : ''; ?>>Medicina
-                    </option>
-                    <option value="comida" <?php echo ($producto['tipo'] == 'comida') ? 'selected' : ''; ?>>Comida
-                    </option>
-                    <option value="accesorio" <?php echo ($producto['tipo'] == 'accesorio') ? 'selected' : ''; ?>>
-                        Accesorio</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control" id="cantidad" name="cantidad"
-                    value="<?php echo $producto['cantidad']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="proveedor">Proveedor</label>
-                <input type="text" class="form-control" id="proveedor" name="proveedor"
-                    value="<?php echo $producto['proveedor']; ?>" required>
-            </div>
-            <button type="submit" name="editar" class="btn btn-primary">Guardar Cambios</button>
-            <a href="gestionar_productos.php" class="btn btn-secondary">Cancelar</a>
-        </form>
-    </div>
+    <div class="container mt-5" style="background-color: rgba(255, 255, 255, 0.4); border-radius: 10px; padding: 20px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); backdrop-filter: blur(5px);">
+    <h2 class="text-center mb-4">Editar Producto</h2>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <input type="hidden" name="id" value="<?php echo $producto['id_producto']; ?>">
+        <div class="form-group">
+            <label for="nombre">Nombre del Producto</label>
+            <input type="text" class="form-control" id="nombre" name="nombre"
+                value="<?php echo $producto['nombre_producto']; ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="tipo">Tipo</label>
+            <select class="form-control" id="tipo" name="tipo" required>
+                <option value="medicina" <?php echo ($producto['tipo'] == 'medicina') ? 'selected' : ''; ?>>Medicina
+                </option>
+                <option value="comida" <?php echo ($producto['tipo'] == 'comida') ? 'selected' : ''; ?>>Comida
+                </option>
+                <option value="accesorio" <?php echo ($producto['tipo'] == 'accesorio') ? 'selected' : ''; ?>>
+                    Accesorio</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cantidad">Cantidad</label>
+            <input type="number" class="form-control" id="cantidad" name="cantidad"
+                value="<?php echo $producto['cantidad']; ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="proveedor">Proveedor</label>
+            <input type="text" class="form-control" id="proveedor" name="proveedor"
+                value="<?php echo $producto['proveedor']; ?>" required>
+        </div>
+        <button type="submit" name="editar" class="btn btn-primary">Guardar Cambios</button>
+        <a href="gestionar_productos.php" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
 </body>
 
 </html>

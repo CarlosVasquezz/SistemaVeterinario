@@ -17,15 +17,26 @@ $genero = $_POST['genero'];
 $animal = $_POST['animal'];
 $id_usuario = $_SESSION['id_usuario'];
 
-// Insertar los datos en la base de datos
-$sql = "INSERT INTO paciente (id_usuario, nombre, edad, genero, animal) VALUES (?, ?, ?, ?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("isiss", $id_usuario, $nombre, $edad, $genero, $animal);
-$stmt->execute();
-$stmt->close();
-$conn->close();
+// Procesar la imagen si se cargó
+if ($_FILES['foto']['size'] > 0) {
+    $foto_nombre = $_FILES['foto']['name'];
+    $foto_tipo = $_FILES['foto']['type'];
+    $foto_contenido = file_get_contents($_FILES['foto']['tmp_name']);
 
-// Redirigir al usuario de regreso al dashboard
-header("Location: ../views/user_views/dashboard_usuario.php");
-exit();
+    // Insertar los datos en la base de datos
+    $sql = "INSERT INTO paciente (id_usuario, nombre, edad, genero, animal, foto_nombre, foto_tipo, foto_contenido) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isissbbs", $id_usuario, $nombre, $edad, $genero, $animal, $foto_nombre, $foto_tipo, $foto_contenido);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
+
+    // Redirigir al usuario de regreso al dashboard
+    header("Location: ../views/user_views/dashboard_usuario.php");
+    exit();
+} else {
+    // Si no se cargó una foto, redirigir con un mensaje de error
+    header("Location: ../views/error.php?mensaje=Debe cargar una foto.");
+    exit();
+}
 ?>

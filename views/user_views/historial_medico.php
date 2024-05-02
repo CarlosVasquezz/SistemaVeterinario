@@ -41,49 +41,51 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial Médico</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/historial.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
 
 </head>
 
 <body>
 
-    <?php include '../header.php'; ?> 
+    <?php include '../header.php'; ?>
 
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Historial Médico</h2>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Nombre Paciente</th>
-                        <th>Edad</th>
-                        <th>Género</th>
-                        <th>Especie</th>
-                        <th>Fecha Cita</th>
-                        <th>Tipo de Cita</th>
-                        <th>Descripción Cita</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo $row['nombre_paciente']; ?></td>
-                            <td><?php echo $row['edad_paciente']; ?></td>
-                            <td><?php echo $row['genero_paciente']; ?></td>
-                            <td><?php echo $row['especie_paciente']; ?></td>
-                            <td><?php echo $row['fecha_cita']; ?></td>
-                            <td><?php echo $row['tipo_de_cita']; ?></td>
-                            <td><?php echo $row['descripcion_cita']; ?></td>
-
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
+    <div class="container-fluid mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4">Historial Médico</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+'                        <thead>
+                            <tr>
+                                <th>Nombre Paciente</th>
+                                <th>Edad</th>
+                                <th>Género</th>
+                                <th>Especie</th>
+                                <th>Fecha Cita</th>
+                                <th>Tipo de Cita</th>
+                                <th>Descripción Cita</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo $row['nombre_paciente']; ?></td>
+                                    <td><?php echo $row['edad_paciente']; ?></td>
+                                    <td><?php echo $row['genero_paciente']; ?></td>
+                                    <td><?php echo $row['especie_paciente']; ?></td>
+                                    <td><?php echo $row['fecha_cita']; ?></td>
+                                    <td><?php echo $row['tipo_de_cita']; ?></td>
+                                    <td><?php echo $row['descripcion_cita']; ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
-    <?php include '../footer.php'; ?> 
+    <?php include '../footer.php'; ?>
 
 </body>
 
