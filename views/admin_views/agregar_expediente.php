@@ -16,7 +16,7 @@ if ($_SESSION['rol'] !== 'admin') {
 require_once "../../utils/db_connection.php";
 
 // Obtener la lista de todos los pacientes con sus especies y dueños
-$sql_pacientes = "SELECT p.id_paciente, p.nombre, p.edad, p.genero, p.animal, p.foto, u.nombre AS dueño
+$sql_pacientes = "SELECT p.id_paciente, p.nombre, p.edad, p.genero, p.animal, u.nombre AS dueño
                   FROM paciente p
                   LEFT JOIN usuario u ON p.id_usuario = u.id_usuario";
 $result_pacientes = $conn->query($sql_pacientes);
